@@ -1,22 +1,17 @@
 package converter
 
-import java.util.*
-
 fun main() {
-    val scanner = Scanner(System.`in`)
+    do {
+        print("Enter what you want to convert (or exit): ")
+        val input = readLine()!!.split(" ")
 
-    print("Enter a number and a measure of length: ")
-    val inputMagnitude = scanner.nextDouble()
-    val inputUnit = scanner.next()
+        if(input.size == 4) {
+            val inputMagnitude = input[0].toDouble()
+            val inputUnit = input[1]
+            val outputUnit = input[3]
+            val converter = UnitConverter.getConverter(inputUnit, outputUnit)
 
-    val meterFactor = UnitConverter.getMeterFactor(inputUnit)
-
-    val outputMagnitude = inputMagnitude * meterFactor
-
-    println(
-            UnitConverter.print(inputMagnitude, inputUnit) + " is " +
-                    UnitConverter.print(outputMagnitude, "meters")
-    )
-
-
+            println(converter.convert(inputMagnitude, inputUnit, outputUnit))
+        }
+    } while(input[0] != "exit")
 }
