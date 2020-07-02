@@ -10,29 +10,17 @@ abstract class UnitConverter {
             return when {
                 DistanceConverter.hasUnits(inputUnit, outputUnit) -> DistanceConverter()
                 MassConverter.hasUnits(inputUnit, outputUnit) -> MassConverter()
+                TemperatureConverter.hasUnits(inputUnit, outputUnit) -> TemperatureConverter()
                 else -> error("Unsupported input/output Units: $inputUnit/$outputUnit")
             }
         }
     }
 
-    abstract val unitToIntermediary: Map<String, Double>
-
     abstract val inputUnitMap: Map<String, String>
 
-    fun convert(inputMagnitude: Double, inputUnit: String, outputUnit: String): String {
-        val toIntermediateFactor = getIntermediateUnitFactor(inputUnit)
-        val toOutputFactor = 1 / getIntermediateUnitFactor(outputUnit)
-        val outputMagnitude = inputMagnitude * toIntermediateFactor * toOutputFactor
+    abstract fun convert(inputMagnitude: Double, inputUnit: String, outputUnit: String): String
 
-        return print(inputMagnitude, inputUnit) + " is " + print(outputMagnitude, outputUnit)
-    }
-
-    fun getIntermediateUnitFactor(rawUnit: String): Double {
-        val standardUnit = standardizeUnit(rawUnit)
-        return unitToIntermediary[standardUnit]!!
-    }
-
-    private fun standardizeUnit(rawUnit: String) : String {
+    protected fun standardizeUnit(rawUnit: String) : String {
         return inputUnitMap[rawUnit.toLowerCase()] ?: error("invalid input unit $rawUnit")
     }
 

@@ -1,6 +1,6 @@
 package converter
 
-class DistanceConverter : UnitConverter() {
+class DistanceConverter : SimpleConverter() {
 
     override val inputUnitMap: Map<String, String> = mapOf(
             "m" to "meters",

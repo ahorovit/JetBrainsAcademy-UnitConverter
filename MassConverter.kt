@@ -1,6 +1,6 @@
 package converter
 
-class MassConverter: UnitConverter() {
+class MassConverter: SimpleConverter() {
 
     override val inputUnitMap: Map<String, String> = mapOf(
             "g" to "grams",
