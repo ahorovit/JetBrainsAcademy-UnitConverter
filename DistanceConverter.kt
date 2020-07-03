@@ -2,6 +2,13 @@ package converter
 
 class DistanceConverter : SimpleConverter() {
 
+    companion object {
+        fun hasUnits(inputUnits: String, outputUnits: String): Boolean {
+            val instance = DistanceConverter()
+            return instance.inputUnitMap.containsKey(inputUnits) && instance.inputUnitMap.containsKey(outputUnits)
+        }
+    }
+
     override val inputUnitMap: Map<String, String> = mapOf(
             "m" to "meters",
             "meter" to "meters",
@@ -46,13 +53,6 @@ class DistanceConverter : SimpleConverter() {
             "feet" -> "foot"
             "inches" -> "inch"
             else -> pluralUnit.dropLast(1)
-        }
-    }
-
-    companion object {
-        fun hasUnits(inputUnits: String, outputUnits: String): Boolean {
-            val instance = DistanceConverter()
-            return instance.inputUnitMap.containsKey(inputUnits) && instance.inputUnitMap.containsKey(outputUnits)
         }
     }
 }

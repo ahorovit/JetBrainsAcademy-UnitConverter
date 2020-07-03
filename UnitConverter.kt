@@ -20,16 +20,9 @@ abstract class UnitConverter {
 
     abstract fun convert(inputMagnitude: Double, inputUnit: String, outputUnit: String): String
 
+    abstract fun print(magnitude: Double, rawUnit: String): String
+
     protected fun standardizeUnit(rawUnit: String) : String {
         return inputUnitMap[rawUnit.toLowerCase()] ?: error("invalid input unit $rawUnit")
-    }
-
-    fun print(magnitude: Double, rawUnit: String): String {
-        val standardUnit = standardizeUnit(rawUnit)
-        return "$magnitude ${if(magnitude == 1.0) toSingular(standardUnit) else standardUnit}"
-    }
-
-    open fun toSingular(pluralUnit: String): String {
-        return pluralUnit.dropLast(1)
     }
 }
