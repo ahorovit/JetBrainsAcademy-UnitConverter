@@ -2,6 +2,17 @@ package converter
 
 class MassConverter: SimpleConverter() {
 
+    companion object {
+        fun hasUnits(inputUnits: String, outputUnits: String): Boolean {
+            return hasUnit(inputUnits) && hasUnit(outputUnits)
+        }
+
+        fun hasUnit(unit: String): Boolean {
+            val instance = MassConverter()
+            return instance.inputUnitMap.containsKey(unit)
+        }
+    }
+
     override val inputUnitMap: Map<String, String> = mapOf(
             "g" to "grams",
             "gram" to "grams",
@@ -28,11 +39,4 @@ class MassConverter: SimpleConverter() {
             "pounds" to 453.592,
             "ounces" to 28.3495
     )
-
-    companion object {
-        fun hasUnits(inputUnits: String, outputUnits: String): Boolean {
-            val instance = MassConverter()
-            return instance.inputUnitMap.containsKey(inputUnits) && instance.inputUnitMap.containsKey(outputUnits)
-        }
-    }
 }

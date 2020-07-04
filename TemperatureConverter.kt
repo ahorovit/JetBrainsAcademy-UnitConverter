@@ -4,8 +4,12 @@ class TemperatureConverter : UnitConverter() {
 
     companion object {
         fun hasUnits(inputUnits: String, outputUnits: String): Boolean {
+            return hasUnit(inputUnits) && hasUnit(outputUnits)
+        }
+
+        fun hasUnit(unit: String): Boolean {
             val instance = TemperatureConverter()
-            return instance.inputUnitMap.containsKey(inputUnits) && instance.inputUnitMap.containsKey(outputUnits)
+            return instance.inputUnitMap.containsKey(unit)
         }
     }
 
@@ -62,7 +66,7 @@ class TemperatureConverter : UnitConverter() {
 
     override fun print(magnitude: Double, rawUnit: String): String {
         var standardUnit = standardizeUnit(rawUnit)
-        var degreeString = ""
+        val degreeString: String
 
         if (standardUnit == "kelvins") {
             if (magnitude == 1.0) {
@@ -72,6 +76,7 @@ class TemperatureConverter : UnitConverter() {
             degreeString = ""
         } else {
             degreeString = "degree${if (magnitude != 1.0) "s" else ""}"
+            standardUnit = standardUnit.capitalize()
         }
 
         return "$magnitude $degreeString $standardUnit"

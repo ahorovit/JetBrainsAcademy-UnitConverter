@@ -4,8 +4,12 @@ class DistanceConverter : SimpleConverter() {
 
     companion object {
         fun hasUnits(inputUnits: String, outputUnits: String): Boolean {
+            return hasUnit(inputUnits) && hasUnit(outputUnits)
+        }
+
+        fun hasUnit(unit: String): Boolean {
             val instance = DistanceConverter()
-            return instance.inputUnitMap.containsKey(inputUnits) && instance.inputUnitMap.containsKey(outputUnits)
+            return instance.inputUnitMap.containsKey(unit)
         }
     }
 
