@@ -11,7 +11,14 @@ class DistanceConverter : SimpleConverter() {
             val instance = DistanceConverter()
             return instance.inputUnitMap.containsKey(unit)
         }
+
+        fun getStandard(unit: String): String {
+            val instance = DistanceConverter()
+            return instance.inputUnitMap[unit]!!
+        }
     }
+
+    override val errString: String = "Length"
 
     override val inputUnitMap: Map<String, String> = mapOf(
             "m" to "meters",

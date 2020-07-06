@@ -11,7 +11,14 @@ class MassConverter: SimpleConverter() {
             val instance = MassConverter()
             return instance.inputUnitMap.containsKey(unit)
         }
+
+        fun getStandard(unit: String): String {
+            val instance = MassConverter()
+            return instance.inputUnitMap[unit]!!
+        }
     }
+
+    override val errString: String = "Weight"
 
     override val inputUnitMap: Map<String, String> = mapOf(
             "g" to "grams",

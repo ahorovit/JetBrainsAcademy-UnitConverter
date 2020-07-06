@@ -6,16 +6,8 @@ abstract class UnitConverter {
         fun getConverter(rawInput: String, rawOutput: String): UnitConverter? {
             val inputUnit = rawInput.toLowerCase()
             val outputUnit = rawOutput.toLowerCase()
-            var printInput = inputUnit
-            var printOutput = outputUnit
-
-            if (!validateUnit(inputUnit)) {
-                printInput = "???"
-            }
-
-            if (!validateUnit(outputUnit)) {
-                printOutput = "???"
-            }
+            var printInput = validateUnit(inputUnit)
+            var printOutput = validateUnit(outputUnit)
 
             return when {
                 DistanceConverter.hasUnits(inputUnit, outputUnit) -> DistanceConverter()
@@ -28,13 +20,13 @@ abstract class UnitConverter {
             }
         }
 
-        private fun validateUnit(unit: String): Boolean
+        private fun validateUnit(unit: String): String
         {
             return when {
-                DistanceConverter.hasUnit(unit) -> true
-                MassConverter.hasUnit(unit) -> true
-                TemperatureConverter.hasUnit(unit) -> true
-                else -> false
+                DistanceConverter.hasUnit(unit) -> DistanceConverter.getStandard(unit)
+                MassConverter.hasUnit(unit) -> MassConverter.getStandard(unit)
+                TemperatureConverter.hasUnit(unit) -> TemperatureConverter.getStandard(unit)
+                else -> "???"
             }
         }
     }

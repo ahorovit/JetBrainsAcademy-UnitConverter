@@ -1,5 +1,7 @@
 package converter
 
+import java.lang.Exception
+
 fun main() {
 
     val regex = "(-?\\d+\\.?\\d*) (degrees? )?([a-z]+) [a-z]* (degrees? )?([a-z]+)".toRegex(RegexOption.IGNORE_CASE)
@@ -34,6 +36,10 @@ fun main() {
 
         val converter = UnitConverter.getConverter(inputUnit, outputUnit) ?: continue
 
-        println(converter.convert(inputMagnitude, inputUnit, outputUnit))
+        try {
+            println(converter.convert(inputMagnitude, inputUnit, outputUnit))
+        } catch (e: Exception) {
+            println(e.message)
+        }
     }
 }

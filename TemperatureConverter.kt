@@ -11,19 +11,24 @@ class TemperatureConverter : UnitConverter() {
             val instance = TemperatureConverter()
             return instance.inputUnitMap.containsKey(unit)
         }
+
+        fun getStandard(unit: String): String {
+            val instance = TemperatureConverter()
+            return instance.inputUnitMap[unit]!!
+        }
     }
 
     override val inputUnitMap: Map<String, String> = mapOf(
-            "celsius" to "celsius",
-            "degree celsius" to "celsius",
-            "degrees celsius" to "celsius",
-            "dc" to "celsius",
-            "c" to "celsius",
-            "fahrenheit" to "fahrenheit",
-            "degree fahrenheit" to "fahrenheit",
-            "degrees fahrenheit" to "fahrenheit",
-            "df" to "fahrenheit",
-            "f" to "fahrenheit",
+            "celsius" to "degrees Celsius",
+            "degree celsius" to "degrees Celsius",
+            "degrees celsius" to "degrees Celsius",
+            "dc" to "degrees Celsius",
+            "c" to "degrees Celsius",
+            "fahrenheit" to "degrees Fahrenheit",
+            "degree fahrenheit" to "degrees Fahrenheit",
+            "degrees fahrenheit" to "degrees Fahrenheit",
+            "df" to "degrees Fahrenheit",
+            "f" to "degrees Fahrenheit",
             "kelvin" to "kelvins",
             "kelvins" to "kelvins",
             "k" to "kelvins"
@@ -34,27 +39,27 @@ class TemperatureConverter : UnitConverter() {
         val outputStandard = standardizeUnit(outputUnit)
 
         val outputMagnitude: Double = when {
-            inputStandard == "fahrenheit" && outputStandard == "celsius" -> {
+            inputStandard == "degrees Fahrenheit" && outputStandard == "degrees Celsius" -> {
                 // C = (F-32) * 5/9
                 (inputMagnitude - 32.0) * (5.0 / 9.0)
             }
-            inputStandard == "celsius" && outputStandard == "fahrenheit" -> {
+            inputStandard == "degrees Celsius" && outputStandard == "degrees Fahrenheit" -> {
                 // F = C * 9/5 + 32
                 inputMagnitude * (9.0 / 5.0) + 32
             }
-            inputStandard == "kelvins" && outputStandard == "fahrenheit" -> {
+            inputStandard == "kelvins" && outputStandard == "degrees Fahrenheit" -> {
                 // F = K * 9/5 - 459.67
                 inputMagnitude * (9.0 / 5.0) - 459.67
             }
-            inputStandard == "fahrenheit" && outputStandard == "kelvins" -> {
+            inputStandard == "degrees Fahrenheit" && outputStandard == "kelvins" -> {
                 // K = (F + 459.67) * 5/9
                 (inputMagnitude + 459.67) * (5.0 / 9.0)
             }
-            inputStandard == "kelvins" && outputStandard == "celsius" -> {
+            inputStandard == "kelvins" && outputStandard == "degrees Celsius" -> {
                 // C = K -273.15
                 inputMagnitude - 273.15
             }
-            inputStandard == "celsius" && outputStandard == "kelvins" -> {
+            inputStandard == "degrees Celsius" && outputStandard == "kelvins" -> {
                 // K = C + 273.15
                 inputMagnitude + 273.15
             }
@@ -76,7 +81,6 @@ class TemperatureConverter : UnitConverter() {
             degreeString = ""
         } else {
             degreeString = "degree${if (magnitude != 1.0) "s" else ""}"
-            standardUnit = standardUnit.capitalize()
         }
 
         return "$magnitude $degreeString $standardUnit"

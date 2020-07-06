@@ -1,10 +1,19 @@
 package converter
 
+import java.lang.Exception
+
 abstract class SimpleConverter : UnitConverter() {
 
     abstract val unitToIntermediary: Map<String, Double>
 
+    abstract val errString: String
+
     override fun convert(inputMagnitude: Double, inputUnit: String, outputUnit: String): String {
+
+        if (inputMagnitude < 0) {
+            throw Exception("$errString shouldn't be negative")
+        }
+
         val toIntermediateFactor = getIntermediateUnitFactor(inputUnit)
         val toOutputFactor = 1 / getIntermediateUnitFactor(outputUnit)
         val outputMagnitude = inputMagnitude * toIntermediateFactor * toOutputFactor
